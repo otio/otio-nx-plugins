@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-sanity",
+  "version": "0.0.1",
+  "generators": {
+    "nx-sanity": {
+      "factory": "./src/generators/nx-sanity/generator",
+      "schema": "./src/generators/nx-sanity/schema.json",
+      "description": "nx-sanity generator"
+    }
+  }
+}

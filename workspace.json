@@ -1,0 +1,76 @@
+{
+  "version": 2,
+  "projects": {
+    "nx-sanity": {
+      "root": "packages/nx-sanity",
+      "sourceRoot": "packages/nx-sanity/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/nx-sanity/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/packages/nx-sanity"],
+          "options": {
+            "jestConfig": "packages/nx-sanity/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/packages/nx-sanity",
+            "tsConfig": "packages/nx-sanity/tsconfig.lib.json",
+            "packageJson": "packages/nx-sanity/package.json",
+            "main": "packages/nx-sanity/src/index.ts",
+            "assets": [
+              "packages/nx-sanity/*.md",
+              {
+                "input": "./packages/nx-sanity/src",
+                "glob": "**/!(*.ts)",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-sanity/src",
+                "glob": "**/*.d.ts",
+                "output": "./src"
+              },
+              {
+                "input": "./packages/nx-sanity",
+                "glob": "generators.json",
+                "output": "."
+              },
+              {
+                "input": "./packages/nx-sanity",
+                "glob": "executors.json",
+                "output": "."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "nx-sanity-e2e": {
+      "root": "e2e/nx-sanity-e2e",
+      "projectType": "application",
+      "sourceRoot": "e2e/nx-sanity-e2e/src",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/nx-plugin:e2e",
+          "options": {
+            "target": "nx-sanity:build",
+            "jestConfig": "e2e/nx-sanity-e2e/jest.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/workspace"
+  }
+}
