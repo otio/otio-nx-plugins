@@ -5,6 +5,7 @@ import {
   runNxCommandAsync,
   uniq,
 } from '@nrwl/nx-plugin/testing';
+
 describe('nx-sanity e2e', () => {
   it('should create nx-sanity', async () => {
     const plugin = uniq('nx-sanity');
