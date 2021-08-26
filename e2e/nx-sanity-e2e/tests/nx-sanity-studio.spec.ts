@@ -1,41 +1,46 @@
-// import {
-//     checkFilesExist,
-//     ensureNxProject,
-//     readJson,
-//     runNxCommandAsync,
-//     uniq,
-//   } from '@nrwl/nx-plugin/testing';
-  
-//   describe('Initialize Sanity Project', () => {
-//     it('should create a sanity studio app', async () => {
-//       const plugin = uniq('nx-sanity');
-//       ensureNxProject('@otio/nx-sanity', 'dist/packages/nx-sanity');
-//       await runNxCommandAsync(`generate @otio/nx-sanity:nx-sanity ${plugin}`);
-  
-//       const result = await runNxCommandAsync(`build ${plugin}`);
-//       expect(result.stdout).toContain('Executor ran');
+import {
+    checkFilesExist,
+    ensureNxProject,
+    readJson,
+    runNxCommandAsync,
+    uniq,
+  } from '@nrwl/nx-plugin/testing';
 
-//     }, 120000);
-  
-//   });
-import { readJson, readWorkspaceConfiguration, Tree } from '@nrwl/devkit';
+import { readWorkspaceConfiguration, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import reactInitGenerator from './init';
-import { InitSchema } from './schema';
+// import reactInitGenerator from './init';
+// import { InitSchema } from './schema';
+
+
+  
+  describe('Initialize Sanity Project', () => {
+
+    beforeEach(async () => {
+      const plugin = uniq('nx-sanity');
+      ensureNxProject('@otio/nx-sanity', 'dist/packages/nx-sanity');
+      await runNxCommandAsync(`generate @otio/nx-sanity:nx-sanity ${plugin}`);
+    })
+
+    it('should create a sanity studio app', async () => { 
+      const result = await runNxCommandAsync(`build ${plugin}`);
+      expect(result.stdout).toContain('Executor ran');
+    }, 120000);
+  
+  });
 
 describe('init', () => {
   let tree: Tree;
   let schema: InitSchema = {
-    unitTestRunner: 'jest',
-    e2eTestRunner: 'cypress',
-    skipFormat: false,
+    // unitTestRunner: 'jest',
+    // e2eTestRunner: 'cypress',
+    // skipFormat: false,
   };
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
   });
 
-  it('should add react dependencies', async () => {
+  it('should add @sanity/cli dependencies', async () => {
     await reactInitGenerator(tree, schema);
     const packageJson = readJson(tree, 'package.json');
     expect(packageJson.dependencies['react']).toBeDefined();
