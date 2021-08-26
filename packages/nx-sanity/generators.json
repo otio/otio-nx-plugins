@@ -7,6 +7,11 @@
       "factory": "./src/generators/nx-sanity/generator",
       "schema": "./src/generators/nx-sanity/schema.json",
       "description": "nx-sanity generator"
+    },
+    "studio": {
+      "factory": "./src/generators/studio/generator",
+      "schema": "./src/generators/studio/schema.json",
+      "description": "studio generator"
     }
   }
 }
