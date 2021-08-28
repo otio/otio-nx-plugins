@@ -10,7 +10,7 @@ import {
 import * as path from 'path';
 import { StudioGeneratorSchema } from './schema';
 
-interface NormalizedSchema extends StudioGeneratorSchema {
+interface NormalizedSchema {
   projectName: string;
   projectRoot: string;
   projectDirectory: string;
@@ -19,8 +19,8 @@ interface NormalizedSchema extends StudioGeneratorSchema {
 
 function normalizeOptions(tree: Tree, options: StudioGeneratorSchema): NormalizedSchema {
   const name = names(options.project).fileName;
-  const projectDirectory = options.directory
-    ? `${names(options.directory).fileName}/${name}`
+  const projectDirectory = options.projectPath
+    ? `${names(options.projectPath).fileName}/${name}`
     : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
@@ -40,7 +40,7 @@ function normalizeOptions(tree: Tree, options: StudioGeneratorSchema): Normalize
 function addFiles(tree: Tree, options: NormalizedSchema) {
     const templateOptions = {
       ...options,
-      ...names(options.name),
+      ...names(options.projectName),
       offsetFromRoot: offsetFromRoot(options.projectRoot),
       template: ''
     };
@@ -58,7 +58,7 @@ export default async function (tree: Tree, options: StudioGeneratorSchema) {
       sourceRoot: `${normalizedOptions.projectRoot}/src`,
       targets: {
         build: {
-          executor: "@otio/nx-sanity:build",
+          executor: "@otio/nx-sanity:init",
         },
       },
       tags: normalizedOptions.parsedTags,
