@@ -13,9 +13,24 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import generator from './generator';
 import { StudioGeneratorSchema } from './schema';
 
+/* 
+    project: string;
+    dataset?: string | 'develop' |'production';
+    outputPath?: string;
+    template?: string | "clean";
+    visibility?: 'public' | 'private' ;
+    createProject?: string;
+    tags?: string;
+*/
+
 describe('studio generator', () => {
   let appTree: Tree;
-  const options: StudioGeneratorSchema = { project: 'studio-test' };
+  const options: StudioGeneratorSchema = { 
+    project: 'studio-test',
+    dataset: 'test',
+    projectPath: ''
+
+  };
 
   beforeEach(() => {
     appTree = createTreeWithEmptyWorkspace();
@@ -26,6 +41,7 @@ describe('studio generator', () => {
     const config = readProjectConfiguration(appTree, 'studio-test');
     expect(config).toBeDefined();
   })
+
 });
 
 // describe('app', () => {
